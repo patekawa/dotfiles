@@ -10,3 +10,10 @@ set tabstop=4
 set autoindent
 set expandtab
 set shiftwidth=4
+
+" Color scheme
+colorscheme desert
+
+" Key configuration
+autocmd BufNewFile,BufRead *.py nnoremap <C-e> :!python3 %
+
