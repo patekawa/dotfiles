@@ -1,0 +1,19 @@
+[include]
+    path = .gitconfig.private
+
+[include]
+    path = .gitconfig.local
+
+[core]
+    autocrlf = false
+    safecrlf = true
+    gitproxy = none
+
+[alias]
+    st = status
+    sta = status -uall
+    cm = commit 
+    cmm = commit -m
+    psh = push origin HEAD
+    plh = pull origin HEAD
+
