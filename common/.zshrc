@@ -10,8 +10,8 @@ setopt prompt_subst
 zstyle ':vcs_info:git:*' check-for-changes true
 zstyle ':vcs_info:git:*' stagedstr "%{%F{yellow}%}!"
 zstyle ':vcs_info:git:*' unstagedstr "%{%F{red}%}+"
-zstyle ':vcs_info:*' formats "%{%F{green}%}%c%u[%b]%f"
-zstyle ':vcs_info:*' actionformats '[%b|%a]'
+zstyle ':vcs_info:*' formats "%{%F{green}%}%c%u(%b) %f"
+zstyle ':vcs_info:*' actionformats '(%b|%a) '
 _is_git_untracked() {
     local untracked="%{%F{red}%}?"
     if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
@@ -25,19 +25,26 @@ _is_git_untracked() {
         fi
     fi
 }
+_is_git_worktree() {
+    if [ "$(git rev-parse --is-inside-work-tree 2> /dev/null)" = "true" ]; then
+        print -P "%F{cyan}(git) $(git remote get-url origin)%f"
+    fi
+}
 
 # Show git status if available
 precmd() {
     vcs_info
     # local left='%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~'
-    local left="[%n@%m] %~"
-    local right='$(_is_git_untracked)${vcs_info_msg_0_}${reset_color}'
+    local myname="[%n@%m] "
+    local gitstat="$(_is_git_untracked)${vcs_info_msg_0_}%f"
+    local curdir="%~ "
     # local invisible='%([BSUbfksu]|([FK]){*})'
     # local leftwidth=${#${(S%%)left//$~invisible/}}
     # local rightwidth=${#${(S%%)right//$~invisible/}}
     # local padwidth=$(($COLUMNS - ($leftwidth + $rightwidth) % $COLUMNS))
     # print -P $left${(r:$padwidth:: :)}$right
-    print -P "%{${reset_color}%}$left $right"
+    # print -P "%{${reset_color}%}${myname}${gitstat}${curdir}"
+    print -P "${myname}${gitstat}${curdir}"
 }
 
 # Show the datetime on executing a command
@@ -52,9 +59,9 @@ preexec(){
     local pos_date=$(($COLUMNS - 20))
     local len_cmd=$(strlen "$@")
     if [ ${len_cmd} -lt ${pos_date} ]; then
-        print -P "\033[1A\033[${pos_date}C%{%F{cyan}%}%D{%Y/%m/%d} %*%{${reset_color}%}"
+        print -P "\033[1A\033[${pos_date}C%{%F{cyan}%}%D{%Y/%m/%d} %*%f"
     else
-        print -P "\033[${pos_date}C%{%F{cyan}%}%D{%Y/%m/%d} %*%{${reset_color}%}"
+        print -P "\033[${pos_date}C%{%F{cyan}%}%D{%Y/%m/%d} %*%f"
     fi
 }
 
@@ -66,7 +73,11 @@ compinit
 setopt auto_cd
 
 # exec. ls after cd
-chpwd() { echo "-> `pwd`"; ls -A}
+chpwd() {
+    print -P "%F{green}-> $(pwd)%f"
+    _is_git_worktree
+    ls -A
+}
 
 # Aliases
 alias ls='ls -G'
