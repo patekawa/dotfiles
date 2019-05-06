@@ -34,16 +34,9 @@ _is_git_worktree() {
 # Show git status if available
 precmd() {
     vcs_info
-    # local left='%{${fg[green]}%}[%n@%m]%{${reset_color}%} %~'
     local myname="[%n@%m] "
     local gitstat="$(_is_git_untracked)${vcs_info_msg_0_}%f"
     local curdir="%~ "
-    # local invisible='%([BSUbfksu]|([FK]){*})'
-    # local leftwidth=${#${(S%%)left//$~invisible/}}
-    # local rightwidth=${#${(S%%)right//$~invisible/}}
-    # local padwidth=$(($COLUMNS - ($leftwidth + $rightwidth) % $COLUMNS))
-    # print -P $left${(r:$padwidth:: :)}$right
-    # print -P "%{${reset_color}%}${myname}${gitstat}${curdir}"
     print -P "${myname}${gitstat}${curdir}"
 }
 
