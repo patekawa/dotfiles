@@ -87,6 +87,7 @@ alias python='python3'
 alias -s {txt,md}='cat'
 alias -s py='python'
 
+ZDOTDIR=$HOME
 [ -f $ZDOTDIR/.zshrc_`uname` ] && . $ZDOTDIR/.zshrc_`uname`
 [ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
 
