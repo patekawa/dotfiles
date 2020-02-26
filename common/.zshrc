@@ -61,9 +61,12 @@ preexec(){
 # Settings for auto-completion
 autoload -Uz compinit
 compinit
+zstyle ':completion:*:default' menu select=1
 
 # auto-cd
 setopt auto_cd
+
+setopt correct
 
 # exec. ls after cd
 chpwd() {
@@ -86,6 +89,17 @@ alias python='python3'
 
 alias -s {txt,md}='cat'
 alias -s py='python'
+
+# History search
+setopt share_history
+setopt hist_ignore_all_dups
+setopt hist_ignore_space
+bindkey '^r' history-incremental-pattern-search-backward
+autoload -Uz history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^p" history-beginning-search-backward-end
+bindkey "^b" history-beginning-search-forward-end
 
 ZDOTDIR=$HOME
 [ -f $ZDOTDIR/.zshrc_`uname` ] && . $ZDOTDIR/.zshrc_`uname`
