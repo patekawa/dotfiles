@@ -85,6 +85,8 @@ alias ll='ls -alF'
 alias la='ls -A'
 alias l='ls -CF'
 
+alias sudovim='sudo vim -u ~/.vimrc'
+
 alias python='python3'
 
 alias -s {txt,md}='cat'
