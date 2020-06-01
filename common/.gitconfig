@@ -16,5 +16,5 @@
     cmm = commit -m
     psh = push origin HEAD
     plh = pull origin HEAD
-	ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
+    ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
 
