@@ -17,4 +17,5 @@
     psh = push origin HEAD
     plh = pull origin HEAD
     ignore = "!gi() { curl -sL https://www.gitignore.io/api/$@ ;}; gi"
+    new = "!f(){ cd \"$GIT_PREFIX\" && git init $* && git symbolic-ref HEAD refs/heads/main; };f"
 
