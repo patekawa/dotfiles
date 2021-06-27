@@ -4,6 +4,9 @@
 [include]
     path = .gitconfig.local
 
+[init]
+    defaultBranch = main
+
 [core]
     autocrlf = false
     safecrlf = true
