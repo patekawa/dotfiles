@@ -103,6 +103,10 @@ zle -N history-beginning-search-forward-end history-search-end
 bindkey "^p" history-beginning-search-backward-end
 bindkey "^b" history-beginning-search-forward-end
 
+if grep -q microsoft /proc/version; then
+    export DISPLAY=$(grep nameserver /etc/resolv.conf | awk '{print $2}'):0.0
+fi
+
 ZDOTDIR=$HOME
 [ -f $ZDOTDIR/.zshrc_`uname` ] && . $ZDOTDIR/.zshrc_`uname`
 [ -f $ZDOTDIR/.zshrc_local ] && . $ZDOTDIR/.zshrc_local
